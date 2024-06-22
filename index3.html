@@ -1,0 +1,33 @@
+<script>
+
+    const barGroups = svg.selectAll("g")
+        .data(dataset)
+        .enter()
+        .append("g")
+        .attr("transform", (d, i) => `translate(0, ${i * (barHeight + margin)})`);
+
+    
+    barGroups.append("rect")
+        .attr("width", d => xScale(d))
+        .attr("height", barHeight - margin)
+        .style("fill", "steelblue")
+        .transition()
+        .duration(1000) // Transition duration in milliseconds
+        .attr("width", d => xScale(d));
+
+  
+    barGroups.append("text")
+        .attr("x", d => xScale(d) + 5) // Adjust label position
+        .attr("y", barHeight / 2)
+        .attr("dy", "0.35em")
+        .text(d => d)
+        .style("fill", "white");
+
+    // Hover effect
+    barGroups.on("mouseover", function() {
+        d3.select(this).select("rect").style("fill", "orange");
+    })
+    .on("mouseout", function() {
+        d3.select(this).select("rect").style("fill", "steelblue");
+    });
+</script>
